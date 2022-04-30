@@ -1,10 +1,18 @@
-const { NavLink } = require('react-router-dom');
+import { MenuLink } from './Navigation.styled';
 
-export const Navigation = () => {
+const active = {
+  textDecoration: 'underline',
+};
+
+const Navigation = () => {
   return (
     <nav>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/movies">Movies</NavLink>
+      <MenuLink activeStyle={active} to="/">
+        Home
+      </MenuLink>
+      <MenuLink to="movies">Movies</MenuLink>
     </nav>
   );
 };
+
+export default Navigation;
