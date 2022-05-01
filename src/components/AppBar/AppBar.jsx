@@ -6,6 +6,7 @@ const AppBar = () => {
   return (
     <Container>
       <Navigation />
+
       {/* <Outlet /> */}
     </Container>
   );

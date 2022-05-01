@@ -1,31 +1,62 @@
 import { useEffect, useState } from 'react';
 import { getTrending } from 'services/API';
-import { FilmGallery, FilmImage } from './HomePage.styled';
+import Gallery from '../../components/Gallery';
+import * as Scroll from 'react-scroll';
 
 const HomePage = () => {
-  const [films, setFilms] = useState();
+  const [films, setFilms] = useState(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getTrending().then(response => setFilms(response.results));
-  }, []);
+    getTrending(page).then(response => setFilms(response.results));
+  }, [page]);
+
+  const onLoadMore = () => {
+    setPage(page => page + 1);
+    Scroll.animateScroll.scrollToTop();
+  };
+
+  const onGoBack = () => {
+    setPage(page => page - 1);
+    Scroll.animateScroll.scrollToTop();
+  };
 
   return (
     <>
-      {films && (
-        <FilmGallery>
-          {films.map(film => (
-            <li key={film.id} id={film.id}>
-              <FilmImage
-                src={`https://image.tmdb.org/t/p/w500/${film.poster_path}`}
-                alt={film.title || film.name}
-              />
-              <p>{film.title || film.name}</p>
-              <p>Votes: {film.vote_count}</p>
-              <p>Vote average: {film.vote_average}</p>
-            </li>
-          ))}
-        </FilmGallery>
-      )}
+      {
+        films && (
+          <Gallery
+            handleGoBack={onGoBack}
+            handleLoadMore={onLoadMore}
+            page={page}
+            films={films}
+          />
+        )
+        // <>
+        // <FilmGallery>
+        //   {films.map(film => (
+
+        //     <FilmGalleryItem key={film.id} id={film.id}>
+
+        //       <FilmImage
+        //         src={`https://image.tmdb.org/t/p/w500/${film.poster_path}`}
+        //         alt={film.title || film.name}
+        //       />
+        //       <FilmTitle>{film.title || film.name}</FilmTitle>
+
+        //       <FilmInfo>Votes: {film.vote_count}</FilmInfo>
+        //       <FilmInfo>Vote average: {film.vote_average}</FilmInfo>
+
+        //     </FilmGalleryItem>
+        //   ))}
+        //   </FilmGallery>
+
+        //   <ButtonsWrapper>
+        //     {page >= 2 &&<LoadMoreButton onClick={onGoBack}>Previous page</LoadMoreButton>}
+        //     {page <= 1000 && <LoadMoreButton onClick={onLoadMore}>Next page</LoadMoreButton>}
+        //   </ButtonsWrapper>
+        //   </>
+      }
     </>
   );
 };

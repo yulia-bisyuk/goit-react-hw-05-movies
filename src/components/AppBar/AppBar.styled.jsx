@@ -7,7 +7,8 @@ export const Container = styled.header`
   min-height: 80px;
   margin-bottom: 16px;
   margin-top: 16px;
+  padding-right: 20px;
   border: none;
-  background-color: #252524;
-  box-shadow: rgb(37 37 36 / 35%) 0px 5px 15px;
+  background-color: #063970;
+  box-shadow: rgb(6 57 112 / 35%) 0px 5px 15px;
 `;

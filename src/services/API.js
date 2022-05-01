@@ -3,10 +3,13 @@
 const axios = require('axios').default;
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
-export async function getTrending() {
+export async function getTrending(page) {
+  const pageParams = new URLSearchParams({
+    page: page,
+  });
   try {
     const response = await axios.get(
-      'trending/all/week?api_key=adc407dcb2a6c0a42279d4aedc8d3de0'
+      `trending/all/week?api_key=adc407dcb2a6c0a42279d4aedc8d3de0&${pageParams}`
     );
     console.log(response.data);
     return response.data;
@@ -15,12 +18,18 @@ export async function getTrending() {
   }
 }
 
-// export async function getPosters(id) {
-//     try {
-//     const response = await axios.get('/movie/{id}/images?api_key=adc407dcb2a6c0a42279d4aedc8d3de0');
-//       console.log(response.data);
-//       return response.data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+export async function getFilmsByQuery(page, query) {
+  const pageParams = new URLSearchParams({
+    page: page,
+  });
+
+  try {
+    const response = await axios.get(
+      `/search/movie?api_key=adc407dcb2a6c0a42279d4aedc8d3de0&query=${query}&${pageParams}`
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
