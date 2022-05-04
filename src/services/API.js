@@ -33,3 +33,15 @@ export async function getFilmsByQuery(page, query) {
     console.error(error);
   }
 }
+
+export async function getFilmById(id) {
+  try {
+    const response = await axios.get(
+      `/movie/${id}?api_key=adc407dcb2a6c0a42279d4aedc8d3de0`
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const FilmGallery = styled.ul`
   display: grid;
@@ -35,6 +36,10 @@ const FilmImage = styled.img`
   width: 100%;
   height: auto;
   object-fit: cover;
+`;
+
+const FilmLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const LoadMoreButton = styled.button`
@@ -76,4 +81,5 @@ export {
   FilmInfo,
   LoadMoreButton,
   ButtonsWrapper,
+  FilmLink,
 };

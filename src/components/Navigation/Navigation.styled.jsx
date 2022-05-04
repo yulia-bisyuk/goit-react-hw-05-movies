@@ -7,4 +7,8 @@ export const MenuLink = styled(NavLink)`
   color: white;
   text-decoration: none;
   font-size: 24px;
+
+  &.active {
+    text-decoration: underline;
+  }
 `;

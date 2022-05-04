@@ -9,6 +9,7 @@ const Form = styled.form`
 `;
 const FormInput = styled.input`
   padding: 4px 8px;
+  margin-bottom: 20px;
   width: 100%;
   height: 24px;
   border: 0px;
@@ -20,6 +21,7 @@ const FormInput = styled.input`
   }
 `;
 const SearchButton = styled.button`
+  margin-bottom: 20px;
   display: inline-block;
   background-color: white;
   border: 0;
