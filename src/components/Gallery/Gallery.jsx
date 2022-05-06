@@ -10,8 +10,9 @@ import {
 } from './Gallery.styled';
 import { useLocation } from 'react-router-dom';
 
-const Gallery = ({ handleGoBack, handleLoadMore, page, films }) => {
+const Gallery = ({ handleGoBack, handleLoadMore, page, films, query }) => {
   const location = useLocation();
+  console.log(typeof location.search);
 
   return (
     <>
@@ -22,6 +23,9 @@ const Gallery = ({ handleGoBack, handleLoadMore, page, films }) => {
               to={
                 location.pathname === '/' ? `movies/${film.id}` : `${film.id}`
               }
+              state={{
+                from: { ...location, search: `query=${query}&${page}` },
+              }}
             >
               <FilmImage
                 src={

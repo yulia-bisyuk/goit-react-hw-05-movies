@@ -1,5 +1,6 @@
+import FilmDetailsNavigation from 'components/FilmDetailsNavigation/FilmDetailsNavigation';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { getFilmById } from 'services/API';
 import {
   FilmWrapper,
@@ -14,22 +15,29 @@ const MovieDetailsPage = () => {
   const { movieId } = useParams();
 
   const navigate = useNavigate();
-  // const location = useLocation();
-  // console.log(location);
+
+  // const searchParams = new URLSearchParams();
+  // const searchQuery = searchParams.get('query');
+  // console.log(searchQuery);
+
+  const location = useLocation();
+  console.log(location);
 
   useEffect(() => {
     getFilmById(movieId).then(setFilm);
   }, [movieId]);
 
   const onGoBack = () => {
-    navigate('/');
+    navigate(location?.state?.from);
   };
 
   return (
     <>
       {film && (
         <>
-          <GoBackButton onClick={onGoBack}>Go Back</GoBackButton>
+          <GoBackButton onClick={onGoBack} type="button">
+            Go Back
+          </GoBackButton>
           <FilmWrapper>
             <FilmImage
               src={
@@ -50,6 +58,8 @@ const MovieDetailsPage = () => {
               <p>{film.genres.map(genre => `${genre.name} `)}</p>
             </FilmInfoWrapper>
           </FilmWrapper>
+          <FilmDetailsNavigation id={movieId} />
+          <Outlet />
         </>
       )}
     </>

@@ -3,18 +3,18 @@ import { getFilmsByQuery } from 'services/API';
 import SearchForm from 'components/SearchForm';
 import Gallery from 'components/Gallery';
 import * as Scroll from 'react-scroll';
-// import { useSearchParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const MoviesPage = () => {
   const [query, setQuery] = useState('');
   const [films, setFilms] = useState(null);
   const [page, setPage] = useState(1);
 
-  // const params = useSearchParams();
-  //   console.log(params);
+  const params = useParams();
+  console.log(params);
 
-  //  const location = useLocation();
-  // console.log(location);
+  const location = useLocation();
+  console.log(location);
 
   const getQuery = userQuery => {
     setQuery(userQuery);
@@ -35,8 +35,6 @@ const MoviesPage = () => {
     });
   }, [page, query]);
 
-  console.log(films);
-
   const onLoadMore = () => {
     setPage(page => page + 1);
     Scroll.animateScroll.scrollToTop();
@@ -54,6 +52,7 @@ const MoviesPage = () => {
         <Gallery
           handleGoBack={onGoBack}
           handleLoadMore={onLoadMore}
+          query={query}
           page={page}
           films={films}
         />

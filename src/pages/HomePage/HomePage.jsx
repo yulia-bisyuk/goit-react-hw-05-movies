@@ -2,14 +2,10 @@ import { useEffect, useState } from 'react';
 import { getTrending } from 'services/API';
 import Gallery from '../../components/Gallery';
 import * as Scroll from 'react-scroll';
-// import { useLocation, useParams } from 'react-router-dom';
 
 const HomePage = () => {
   const [films, setFilms] = useState(null);
   const [page, setPage] = useState(1);
-
-  // const location = useLocation();
-  // console.log(location);
 
   // const params = useParams();
   // console.log(params);

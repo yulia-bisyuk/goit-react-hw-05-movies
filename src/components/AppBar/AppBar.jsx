@@ -1,13 +1,10 @@
-import Navigation from 'components/Navigation';
-// import { Outlet } from 'react-router-dom';
+import Navigation from 'components/MainNavigation';
 import { Container } from './AppBar.styled';
 
 const AppBar = () => {
   return (
     <Container>
       <Navigation />
-
-      {/* <Outlet /> */}
     </Container>
   );
 };
