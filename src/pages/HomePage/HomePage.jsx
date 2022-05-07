@@ -2,25 +2,33 @@ import { useEffect, useState } from 'react';
 import { getTrending } from 'services/API';
 import Gallery from '../../components/Gallery';
 import * as Scroll from 'react-scroll';
+import { useSearchParams } from 'react-router-dom';
 
 const HomePage = () => {
   const [films, setFilms] = useState(null);
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // const params = useParams();
-  // console.log(params);
+  const currentPage = searchParams.get('page') ?? 1;
 
   useEffect(() => {
-    getTrending(page).then(response => setFilms(response.results));
-  }, [page]);
+    getTrending(currentPage)
+      .then(response => setFilms(response.results))
+      .catch(error => console.log(error));
+  }, [currentPage]);
 
   const onLoadMore = () => {
-    setPage(page => page + 1);
+    setSearchParams({
+      page: Number(currentPage) + 1,
+    });
+
     Scroll.animateScroll.scrollToTop();
   };
 
   const onGoBack = () => {
-    setPage(page => page - 1);
+    setSearchParams({
+      page: Number(currentPage) - 1,
+    });
+
     Scroll.animateScroll.scrollToTop();
   };
 
@@ -30,7 +38,7 @@ const HomePage = () => {
         <Gallery
           handleGoBack={onGoBack}
           handleLoadMore={onLoadMore}
-          page={page}
+          page={Number(currentPage)}
           films={films}
         />
       )}

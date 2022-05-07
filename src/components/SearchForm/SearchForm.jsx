@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Form, FormInput, SearchButton } from './SearchForm.styled';
 import { IconContext } from 'react-icons';
@@ -7,7 +8,6 @@ const SearchForm = ({ onSubmit }) => {
   const [userQuery, setUserQuery] = useState('');
 
   const handleChange = e => {
-    console.log(e.currentTarget.value);
     setUserQuery(e.currentTarget.value.toLowerCase());
   };
 
@@ -37,3 +37,7 @@ const SearchForm = ({ onSubmit }) => {
 };
 
 export default SearchForm;
+
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func,
+};

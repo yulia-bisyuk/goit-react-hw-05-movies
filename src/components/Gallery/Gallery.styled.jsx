@@ -40,6 +40,9 @@ const FilmImage = styled.img`
 
 const FilmLink = styled(Link)`
   text-decoration: none;
+  &:visited {
+    color: inherit;
+  }
 `;
 
 const LoadMoreButton = styled.button`

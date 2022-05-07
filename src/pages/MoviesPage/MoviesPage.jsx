@@ -3,57 +3,66 @@ import { getFilmsByQuery } from 'services/API';
 import SearchForm from 'components/SearchForm';
 import Gallery from 'components/Gallery';
 import * as Scroll from 'react-scroll';
-import { useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const MoviesPage = () => {
-  const [query, setQuery] = useState('');
   const [films, setFilms] = useState(null);
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const params = useParams();
-  console.log(params);
-
-  const location = useLocation();
-  console.log(location);
-
-  const getQuery = userQuery => {
-    setQuery(userQuery);
+  const onSubmit = userQuery => {
+    setSearchParams({
+      query: userQuery.trim(),
+      page: 1,
+    });
   };
 
-  useEffect(() => {
-    if (query === '' || query.trim() === '') {
-      return;
-    }
+  const searchQuery = searchParams.get('query') ?? '';
+  const currentPage = searchParams.get('page') ?? 1;
 
-    getFilmsByQuery(page, query).then(response => {
-      console.log(response);
-      if (response.results.length === 0) {
-        alert('Please, type correct search query');
-      } else {
-        setFilms(response.results);
-      }
-    });
-  }, [page, query]);
+  useEffect(() => {
+    if (!searchQuery) return setSearchParams('');
+
+    getFilmsByQuery(searchQuery, currentPage)
+      .then(response => {
+        if (response.results.length === 0) {
+          alert('Please, type correct search query');
+        } else {
+          setFilms(response.results);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        navigate('/');
+      });
+  }, [searchQuery, currentPage, setSearchParams, navigate]);
 
   const onLoadMore = () => {
-    setPage(page => page + 1);
+    setSearchParams({
+      query: searchQuery,
+      page: Number(currentPage) + 1,
+    });
+
     Scroll.animateScroll.scrollToTop();
   };
 
   const onGoBack = () => {
-    setPage(page => page - 1);
+    setSearchParams({
+      query: searchQuery,
+      page: Number(currentPage) - 1,
+    });
     Scroll.animateScroll.scrollToTop();
   };
 
   return (
     <>
-      <SearchForm onSubmit={getQuery} />
+      <SearchForm onSubmit={onSubmit} />
       {films && (
         <Gallery
           handleGoBack={onGoBack}
           handleLoadMore={onLoadMore}
-          query={query}
-          page={page}
+          query={searchQuery}
+          page={Number(currentPage)}
           films={films}
         />
       )}

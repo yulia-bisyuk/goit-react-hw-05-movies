@@ -28,14 +28,6 @@ const SearchButton = styled.button`
   border-bottom: 1px solid #063970;
   cursor: pointer;
   outline: none;
-  /* width: 48px;
-  height: 48px; */
-
-  /* background-size: 40%;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.6;
-  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1); */
 `;
 
 export { Form, FormInput, SearchButton };

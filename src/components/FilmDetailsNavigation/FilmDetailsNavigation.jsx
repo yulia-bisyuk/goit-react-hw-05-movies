@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Link, LinksWrapper } from './FilmDetailsNavigation.styled';
 
 const FilmDetailsNavigation = ({ id }) => {
   const location = useLocation();
-  console.log(location);
 
   return (
     <LinksWrapper>
@@ -22,3 +22,7 @@ const FilmDetailsNavigation = ({ id }) => {
 };
 
 export default FilmDetailsNavigation;
+
+FilmDetailsNavigation.propTypes = {
+  id: PropTypes.string,
+};

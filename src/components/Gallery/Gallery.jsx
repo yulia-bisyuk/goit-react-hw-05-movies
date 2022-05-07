@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   FilmGallery,
   FilmGalleryItem,
@@ -10,9 +11,8 @@ import {
 } from './Gallery.styled';
 import { useLocation } from 'react-router-dom';
 
-const Gallery = ({ handleGoBack, handleLoadMore, page, films, query }) => {
+const Gallery = ({ handleGoBack, handleLoadMore, page, films }) => {
   const location = useLocation();
-  console.log(typeof location.search);
 
   return (
     <>
@@ -24,7 +24,7 @@ const Gallery = ({ handleGoBack, handleLoadMore, page, films, query }) => {
                 location.pathname === '/' ? `movies/${film.id}` : `${film.id}`
               }
               state={{
-                from: { ...location, search: `query=${query}&${page}` },
+                from: location,
               }}
             >
               <FilmImage
@@ -48,7 +48,7 @@ const Gallery = ({ handleGoBack, handleLoadMore, page, films, query }) => {
         {page >= 2 && (
           <LoadMoreButton onClick={handleGoBack}>Previous page</LoadMoreButton>
         )}
-        {page <= page * films.length && (
+        {films.length === 20 && (
           <LoadMoreButton onClick={handleLoadMore}>Next page</LoadMoreButton>
         )}
       </ButtonsWrapper>
@@ -57,3 +57,10 @@ const Gallery = ({ handleGoBack, handleLoadMore, page, films, query }) => {
 };
 
 export default Gallery;
+
+Gallery.propTypes = {
+  handleGoBack: PropTypes.func,
+  handleLoadMore: PropTypes.func,
+  page: PropTypes.number,
+  films: PropTypes.array,
+};

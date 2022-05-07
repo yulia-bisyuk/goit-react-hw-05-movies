@@ -11,24 +11,22 @@ import {
 
 const MovieDetailsPage = () => {
   const [film, setFilm] = useState(null);
-
   const { movieId } = useParams();
 
   const navigate = useNavigate();
-
-  // const searchParams = new URLSearchParams();
-  // const searchQuery = searchParams.get('query');
-  // console.log(searchQuery);
-
   const location = useLocation();
-  console.log(location);
 
   useEffect(() => {
-    getFilmById(movieId).then(setFilm);
-  }, [movieId]);
+    getFilmById(movieId)
+      .then(setFilm)
+      .catch(error => {
+        console.log(error);
+        navigate('/');
+      });
+  }, [movieId, navigate]);
 
   const onGoBack = () => {
-    navigate(location?.state?.from);
+    navigate(location?.state?.from ?? '/');
   };
 
   return (
@@ -58,7 +56,9 @@ const MovieDetailsPage = () => {
               <p>{film.genres.map(genre => `${genre.name} `)}</p>
             </FilmInfoWrapper>
           </FilmWrapper>
+
           <FilmDetailsNavigation id={movieId} />
+
           <Outlet />
         </>
       )}

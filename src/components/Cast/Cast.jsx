@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getCast } from '../../services/API';
 import { CastItem, CastImg, CastName } from './Cast.styled';
 
 const Cast = () => {
   const [cast, setCast] = useState(null);
   const { movieId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getCast(movieId).then(({ cast }) => setCast(cast));
-  }, [movieId]);
+    getCast(movieId)
+      .then(({ cast }) => setCast(cast))
+      .catch(error => {
+        console.log(error);
+        navigate('/');
+      });
+  }, [movieId, navigate]);
 
   return (
     <>
