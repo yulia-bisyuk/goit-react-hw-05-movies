@@ -27,6 +27,7 @@ const MoviesPage = () => {
       .then(response => {
         if (response.results.length === 0) {
           alert('Please, type correct search query');
+          navigate('/movies');
         } else {
           setFilms(response.results);
         }

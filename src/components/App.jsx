@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Layout = lazy(() => import('./Layout'));
+const Loader = lazy(() => import('./Loader'));
 const Cast = lazy(() => import('./Cast'));
 const Reviews = lazy(() => import('./Reviews'));
 const HomePage = lazy(() => import('pages/HomePage'));
@@ -12,7 +13,7 @@ const NotFoundPage = lazy(() => import('pages/NotFoundPage'));
 
 export const App = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
